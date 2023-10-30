@@ -1,10 +1,18 @@
 # Contents
 1. Simple Recommender Systems
-2. Association Rule Learning
-3. Content Based Filtering
-4. Colaborative Filtering
 
-# 1. Association Rule Learning 
+2. Association Rule Learning
+
+3. Content Based Filtering
+
+4. Collaborative Filtering 
+
+
+# 1. Simple Recommender Systems
+
+Out of scope:)
+
+# 2. Association Rule Learning 
 Association rule learning is a machine learning technique used to uncover interesting and often hidden relationships, dependencies, or patterns in large datasets. It is primarily applied in the field of data mining and is particularly useful for identifying associations between items or events within a dataset. 
 
 The fundamental concept behind association rule learning is to analyze the frequency and co-occurrence of items in transactions or records to generate rules of the form "if A, then B," where A and B are sets of items or events.
@@ -15,7 +23,7 @@ Popular algorithms are : AIS, SETM, Apriori...
 
 Best one is: Apriori.
 
-## 1.1 Apriori Alghorithm
+## 2.1 Apriori Alghorithm
 
 The Apriori algorithm is a classic and fundamental algorithm used in association rule learning and frequent itemset mining. Its primary purpose is to discover frequent itemsets within a dataset and generate association rules based on these itemsets.
 
@@ -48,9 +56,9 @@ Confidence(X,Y) = Freq(X,Y)/Freq(X)
 Lift = Support(X,Y)/Support(X)*Support(Y)
 ```
 
-# 2. Content Based Filtering
+# 3. Content Based Filtering
 
-## 2.1 Vector Represantions of words
+## 3.1 Vector Represantions of words
 
 Methods:
 - Count Vector (Word Count)
@@ -63,7 +71,7 @@ Calculation principles:
 ![graph_1](graph_1.png)
 
 
-### 2.1.1 Count Vector
+### 3.1.1 Count Vector
 
 "Count vector" typically refers to a numerical representation of the content or features of items (such as articles, products, or movies) in a recommendation system. This vector represents the presence or frequency of specific attributes, keywords, or characteristics associated with each item. Each dimension in the vector corresponds to a unique attribute, and the value in each dimension represents the count of how many times that attribute appears in the item's content.
 
@@ -79,19 +87,19 @@ Document 3: "Dogs and cats are great pets."
 
 ![Alt text](count-vector.png)
 
-### 2.1.2 TF-DF
+### 3.1.2 TF-DF
 
 
 TF-IDF stands for "Term Frequency-Inverse Document Frequency." It is a numerical statistic used in information retrieval, text mining, and natural language processing to evaluate the importance of a term (word or phrase) within a document relative to a collection of documents (a corpus). TF-IDF is commonly used for tasks like text classification, document ranking, and content-based recommendation systems.
 
 Here's a brief explanation of the two components of TF-IDF:
 
-**Term Frequency (TF)**: This component measures how frequently a term appears in a document. It is calculated as the ratio of the number of times a term occurs in a document to the total number of terms in the document. The idea is to give higher weight to terms that appear more frequently within a document. The formula for term frequency is:
+**Term Frequency (TF):** This component measures how frequently a term appears in a document. It is calculated as the ratio of the number of times a term occurs in a document to the total number of terms in the document. The idea is to give higher weight to terms that appear more frequently within a document. The formula for term frequency is:
 ```
 TF(t, d) = (Number of times term t appears in document d) / (Total number of terms in document d)
 ```
 
-**Inverse Document Frequency (IDF)**: This component measures the importance of a term in the entire corpus by penalizing terms that are common across many documents. It is calculated as the logarithm of the total number of documents in the corpus divided by the number of documents containing the term, and then the result is inverted. The formula for inverse document frequency is:
+**Inverse Document Frequency (IDF):** This component measures the importance of a term in the entire corpus by penalizing terms that are common across many documents. It is calculated as the logarithm of the total number of documents in the corpus divided by the number of documents containing the term, and then the result is inverted. The formula for inverse document frequency is:
 ```
 IDF(t) = log((Total number of documents in the corpus) / (Number of documents containing term t))
 ```
@@ -118,3 +126,50 @@ Document 3: "Dogs and cats are great pets."
 ![Alt text](td-idf.png)
 
 
+# 4. Collaborative Filtering
+
+Collaborative filtering is a popular and powerful technique in recommendation systems, used to provide personalized recommendations to users. It's based on the idea that people who have agreed on similar items in the past tend to agree on other items as well. Collaborative filtering methods rely on user-item interactions or user-user/item-item associations within a dataset to make recommendations. There are two main types of collaborative filtering:
+
+## 4.1 User-Based Collaborative Filtering 
+
+In this approach, recommendations are made by finding users who are similar to the target user and suggesting items that those similar users have liked. The assumption is that users who have rated or interacted with items in a similar way to the target user are likely to have similar tastes. The steps involved in user-based collaborative filtering are:
+
+- Calculate user similarity: Determine the similarity between the target user and other users based on their historical interactions (e.g., ratings, purchases).
+Select similar users: Identify the most similar users to the target user based on user similarity scores.
+- Recommend items: Suggest items that the similar users have liked but the target user has not interacted with.
+
+## 4.2 Item-Based Collaborative Filtering 
+
+In this approach, recommendations are made by identifying items that are similar to the ones the target user has already rated or interacted with. The idea is that if a user has shown interest in one item, they are likely to be interested in items that are similar to it. The steps involved in item-based collaborative filtering are:
+
+- Calculate item similarity: Determine the similarity between items based on how they have been rated or interacted with by users.
+- Select similar items: Identify the most similar items to those the target user has already liked or interacted with.
+- Recommend items: Suggest items that are similar to the ones the target user has shown interest in.
+
+**Collaborative filtering has several advantages:**
+
+- It can provide personalized recommendations based on user behavior and preferences.
+- It does not rely on explicit feature extraction or content analysis, making it suitable for a wide range of recommendation scenarios.
+- It can capture complex user-item interactions and adapt to changing user behavior.
+
+**However, collaborative filtering also has some challenges:**
+
+- It may suffer from the "cold start" problem, where it's challenging to make recommendations for new users or items with little interaction history.
+- It can be computationally intensive and may require a large amount of data to make accurate recommendations.
+- Sparsity in the user-item interaction matrix can make it difficult to find meaningful similarities.
+
+**To overcome these challenges, hybrid recommendation systems combine collaborative filtering with other techniques like content-based filtering or matrix factorization to provide more accurate and robust recommendations.**
+
+## 4.3 Model-Based Collaborative Filtering:**
+
+Model-based collaborative filtering methods build models or representations of the user-item interactions to make recommendations. These models are typically learned from the available data and can provide more advanced and accurate recommendations compared to traditional memory-based collaborative filtering.
+
+**Matrix Factorization**: Matrix factorization techniques, such as Singular Value Decomposition (SVD) and more advanced methods like matrix factorization with regularization (e.g., alternating least squares), factorize the user-item interaction matrix into lower-dimensional matrices. These lower-dimensional representations capture latent features of users and items. The learned latent factors can be used to predict missing ratings or make recommendations.
+
+**Matrix Completion**: Matrix completion methods, including low-rank matrix completion and matrix recovery techniques, aim to fill in the missing entries in the user-item interaction matrix. These methods leverage the observed interactions to estimate the missing ones, and the completed matrix is then used for recommendations.
+
+**Probabilistic Models**: Bayesian probabilistic models, such as collaborative topic models and latent Dirichlet allocation (LDA), can be used to capture the underlying structure of user preferences and item characteristics. These models assign users and items to latent topics and learn probabilistic relationships between topics and recommendations.
+
+**Deep Learning**: Deep learning models, including neural collaborative filtering (NeuMF) and deep matrix factorization, use neural networks to model user-item interactions. These models can capture complex patterns and relationships in the data, potentially leading to more accurate recommendations.
+
+Model-based collaborative filtering approaches are generally more advanced and scalable than memory-based approaches. They have the advantage of handling the sparsity issue better and can provide more accurate recommendations, especially when dealing with large and complex datasets. However, they may require more computational resources for training and are typically more complex to implement.
