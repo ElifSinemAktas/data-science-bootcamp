@@ -1,2 +1,2 @@
-## Data Science Bootcamp Notes
+## Data Science Bootcamp Case Studies
 
