@@ -1,85 +1,70 @@
-
 ###################################################
-# PROJE: Rating Product & Sorting Reviews in Amazon
-###################################################
-
-###################################################
-# İş Problemi
+# PROJECT: Rating Product & Sorting Reviews in Amazon
 ###################################################
 
-# E-ticaretteki en önemli problemlerden bir tanesi ürünlere satış sonrası verilen puanların doğru şekilde hesaplanmasıdır.
-# Bu problemin çözümü e-ticaret sitesi için daha fazla müşteri memnuniyeti sağlamak, satıcılar için ürünün öne çıkması ve satın
-# alanlar için sorunsuz bir alışveriş deneyimi demektir. Bir diğer problem ise ürünlere verilen yorumların doğru bir şekilde sıralanması
-# olarak karşımıza çıkmaktadır. Yanıltıcı yorumların öne çıkması ürünün satışını doğrudan etkileyeceğinden dolayı hem maddi kayıp
-# hem de müşteri kaybına neden olacaktır. Bu 2 temel problemin çözümünde e-ticaret sitesi ve satıcılar satışlarını arttırırken müşteriler
-# ise satın alma yolculuğunu sorunsuz olarak tamamlayacaktır.
-
 ###################################################
-# Veri Seti Hikayesi
+# Business Problem
 ###################################################
 
-# Amazon ürün verilerini içeren bu veri seti ürün kategorileri ile çeşitli metadataları içermektedir.
-# Elektronik kategorisindeki en fazla yorum alan ürünün kullanıcı puanları ve yorumları vardır.
-
-# Değişkenler:
-# reviewerID: Kullanıcı ID’si
-# asin: Ürün ID’si
-# reviewerName: Kullanıcı Adı
-# helpful: Faydalı değerlendirme derecesi
-# reviewText: Değerlendirme
-# overall: Ürün rating’i
-# summary: Değerlendirme özeti
-# unixReviewTime: Değerlendirme zamanı
-# reviewTime: Değerlendirme zamanı Raw
-# day_diff: Değerlendirmeden itibaren geçen gün sayısı
-# helpful_yes: Değerlendirmenin faydalı bulunma sayısı
-# total_vote: Değerlendirmeye verilen oy sayısı
-
-
+# One of the most important problems in e-commerce is the accurate calculation of post-purchase ratings for products.
+# Solving this problem means more customer satisfaction for the e-commerce website, increased visibility for sellers, and a seamless shopping experience for buyers.
+# Another problem is the accurate sorting of product reviews. Misleading reviews coming to the forefront will directly affect the product's sales, resulting in both financial loss and customer loss.
+# The solution to these two fundamental problems will increase sales for e-commerce websites and sellers, while providing a smooth shopping journey for customers.
 
 ###################################################
-# GÖREV 1: Average Rating'i Güncel Yorumlara Göre Hesaplayınız ve Var Olan Average Rating ile Kıyaslayınız.
+# Data Set Story
 ###################################################
 
-# Paylaşılan veri setinde kullanıcılar bir ürüne puanlar vermiş ve yorumlar yapmıştır.
-# Bu görevde amacımız verilen puanları tarihe göre ağırlıklandırarak değerlendirmek.
-# İlk ortalama puan ile elde edilecek tarihe göre ağırlıklı puanın karşılaştırılması gerekmektedir.
+# This data set contains Amazon product data, including product categories and various metadata.
+# It contains user ratings and reviews for the product with the most reviews in the Electronics category.
 
-
-###################################################
-# Adım 1: Veri Setini Okutunuz ve Ürünün Ortalama Puanını Hesaplayınız.
-###################################################
-
-
-###################################################
-# Adım 2: Tarihe Göre Ağırlıklı Puan Ortalamasını Hesaplayınız.
-###################################################
-
-
-
-
-###################################################
-# Görev 2: Ürün için Ürün Detay Sayfasında Görüntülenecek 20 Review'i Belirleyiniz.
-###################################################
-
+# Variables:
+# reviewerID: User ID
+# asin: Product ID
+# reviewerName: User Name
+# helpful: Helpful rating score
+# reviewText: Review
+# overall: Product rating
+# summary: Review summary
+# unixReviewTime: Review time
+# reviewTime: Raw review time
+# day_diff: Number of days elapsed since the review
+# helpful_yes: Number of times the review was found helpful
+# total_vote: Total number of votes for the review
 
 ###################################################
-# Adım 1. helpful_no Değişkenini Üretiniz
+# TASK 1: Calculate the Average Rating Based on Recent Reviews and Compare It with the Existing Average Rating.
 ###################################################
 
-# Not:
-# total_vote bir yoruma verilen toplam up-down sayısıdır.
-# up, helpful demektir.
-# veri setinde helpful_no değişkeni yoktur, var olan değişkenler üzerinden üretilmesi gerekmektedir.
-
+# In the shared data set, users have rated and reviewed a product.
+# The aim of this task is to evaluate the given ratings by weighting them based on the date.
+# A comparison should be made between the initial average rating and the weighted rating to be obtained based on the date.
 
 ###################################################
-# Adım 2. score_pos_neg_diff, score_average_rating ve wilson_lower_bound Skorlarını Hesaplayıp Veriye Ekleyiniz
+# Step 1: Read the Data Set and Calculate the Average Product Rating.
 ###################################################
 
-
-##################################################
-# Adım 3. 20 Yorumu Belirleyiniz ve Sonuçları Yorumlayınız.
+###################################################
+# Step 2: Calculate the Weighted Average Rating Based on the Date.
 ###################################################
 
+###################################################
+# Task 2: Determine the 20 Reviews That Will Be Displayed on the Product Detail Page for the Product.
+###################################################
 
+###################################################
+# Step 1. Generate the helpful_no Variable.
+###################################################
+
+# Note:
+# total_vote is the total number of up-down votes for a review.
+# up means helpful.
+# There is no helpful_no variable in the data set, so it needs to be generated using existing variables.
+
+###################################################
+# Step 2. Calculate the score_pos_neg_diff, score_average_rating, and wilson_lower_bound Scores and Add Them to the Data.
+###################################################
+
+###################################################
+# Step 3. Determine the 20 Reviews and Interpret the Results.
+###################################################

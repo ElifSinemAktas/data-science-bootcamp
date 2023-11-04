@@ -12,7 +12,7 @@
 #############################
 # Data set
 #############################
-#The data set consists of the services received by customers and the categories of these services.
+# The data set consists of the services received by customers and the categories of these services.
 # Contains date and time information of each service received.
 
 # UserId: Customer number
@@ -22,7 +22,13 @@
 # CategoryId: These are anonymized categories. (Example: Cleaning, transportation, renovation category)
 # CreateDate: Date the service was purchased
 
-
+import pandas as pd
+pd.set_option('display.max_columns', None)
+# pd.set_option('display.max_rows', None)
+pd.set_option('display.width', 500)
+# çıktının tek bir satırda olmasını sağlar.
+pd.set_option('display.expand_frame_repr', False)
+from mlxtend.frequent_patterns import apriori, association_rules
 
 
 #############################
@@ -31,6 +37,8 @@
 
 # Step 1: Read your pear_data.csv file.
 
+df_ = pd.read_csv("../materials/armut/armut_data.csv")
+df = df_.copy()
 
 # Step 2: ServiceID represents a different service for each CategoryID.
 # Create a new variable to represent the services by combining ServiceID and CategoryID with "_".

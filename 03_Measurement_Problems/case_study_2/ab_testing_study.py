@@ -1,120 +1,86 @@
 #####################################################
-# AB Testi ile BiddingYöntemlerinin Dönüşümünün Karşılaştırılması
+# Comparing Conversion of Bidding Methods with A/B Testing
 #####################################################
 
 #####################################################
-# İş Problemi
+# Business Problem
 #####################################################
 
-# Facebook kısa süre önce mevcut "maximumbidding" adı verilen teklif verme türüne alternatif
-# olarak yeni bir teklif türü olan "average bidding"’i tanıttı. Müşterilerimizden biri olan bombabomba.com,
-# bu yeni özelliği test etmeye karar verdi veaveragebidding'in maximumbidding'den daha fazla dönüşüm
-# getirip getirmediğini anlamak için bir A/B testi yapmak istiyor.A/B testi 1 aydır devam ediyor ve
-# bombabomba.com şimdi sizden bu A/B testinin sonuçlarını analiz etmenizi bekliyor.Bombabomba.com için
-# nihai başarı ölçütü Purchase'dır. Bu nedenle, istatistiksel testler için Purchasemetriğine odaklanılmalıdır.
-
-
-
+# Facebook recently introduced a new bidding type called "average bidding" as an alternative to the existing "maximum bidding" bidding type.
+# One of our clients, bombabomba.com, has decided to test this new feature and wants to conduct an A/B test to determine whether "average bidding" brings more conversions than "maximum bidding."
+# The A/B test has been ongoing for 1 month, and bombabomba.com now expects you to analyze the results of this A/B test.
+# The ultimate success metric for bombabomba.com is "Purchase." Therefore, statistical tests should focus on the "Purchase" metric.
 
 #####################################################
-# Veri Seti Hikayesi
+# Data Set Story
 #####################################################
 
-# Bir firmanın web site bilgilerini içeren bu veri setinde kullanıcıların gördükleri ve tıkladıkları
-# reklam sayıları gibi bilgilerin yanı sıra buradan gelen kazanç bilgileri yer almaktadır.Kontrol ve Test
-# grubu olmak üzere iki ayrı veri seti vardır. Bu veri setleriab_testing.xlsxexcel’ininayrı sayfalarında yer
-# almaktadır. Kontrol grubuna Maximum Bidding, test grubuna AverageBiddinguygulanmıştır.
+# This data set contains information from a company's website, including data about users' ad views, clicks on ads, and earnings generated from these data.
+# There are two separate data sets for the control and test groups, "ab_testing_data.xlsx," and they are on different sheets in the Excel file. The control group used "Maximum Bidding," and the test group used "Average Bidding."
 
-# impression: Reklam görüntüleme sayısı
-# Click: Görüntülenen reklama tıklama sayısı
-# Purchase: Tıklanan reklamlar sonrası satın alınan ürün sayısı
-# Earning: Satın alınan ürünler sonrası elde edilen kazanç
-
-
+# Variables:
+# impression: Number of ad views
+# Click: Number of clicks on viewed ads
+# Purchase: Number of products purchased after clicking on ads
+# Earning: Earnings generated from the purchased products
 
 #####################################################
-# Proje Görevleri
+# Project Tasks
 #####################################################
 
-######################################################
-# AB Testing (Bağımsız İki Örneklem T Testi)
-######################################################
-
-# 1. Hipotezleri Kur
-# 2. Varsayım Kontrolü
-#   - 1. Normallik Varsayımı (shapiro)
-#   - 2. Varyans Homojenliği (levene)
-# 3. Hipotezin Uygulanması
-#   - 1. Varsayımlar sağlanıyorsa bağımsız iki örneklem t testi
-#   - 2. Varsayımlar sağlanmıyorsa mannwhitneyu testi
-# 4. p-value değerine göre sonuçları yorumla
-# Not:
-# - Normallik sağlanmıyorsa direkt 2 numara. Varyans homojenliği sağlanmıyorsa 1 numaraya arguman girilir.
-# - Normallik incelemesi öncesi aykırı değer incelemesi ve düzeltmesi yapmak faydalı olabilir.
-
-
-
-
 #####################################################
-# Görev 1:  Veriyi Hazırlama ve Analiz Etme
+# A/B Testing (Independent Two Sample T-Test)
 #####################################################
 
-# Adım 1:  ab_testing_data.xlsx adlı kontrol ve test grubu verilerinden oluşan veri setini okutunuz. Kontrol ve test grubu verilerini ayrı değişkenlere atayınız.
-
-
-# Adım 2: Kontrol ve test grubu verilerini analiz ediniz.
-
-
-
-# Adım 3: Analiz işleminden sonra concat metodunu kullanarak kontrol ve test grubu verilerini birleştiriniz.
-
-
-
-
-
+# 1. Formulate Hypotheses
+# 2. Assumption Checks
+# - 1. Normality Assumption (Shapiro)
+# - 2. Homogeneity of Variances (Levene)
+# 3. Applying the Hypothesis
+# - 1. If assumptions are met, perform an independent two-sample t-test
+# - 2. If assumptions are not met, perform the Mann-Whitney U test
+# 4. Interpret the results based on the p-value.
+# Note:
+# - If normality is not met, directly move to number 2. If homogeneity of variances is not met, enter 1 as an argument.
 
 #####################################################
-# Görev 2:  A/B Testinin Hipotezinin Tanımlanması
+# Task 1: Data Preparation and Analysis
 #####################################################
 
-# Adım 1: Hipotezi tanımlayınız.
+# Step 1: Read the data set consisting of control and test group data from "ab_testing_data.xlsx" and assign them to separate variables.
 
+# Step 2: Analyze the control and test group data.
 
-# Adım 2: Kontrol ve test grubu için purchase(kazanç) ortalamalarını analiz ediniz
-
+# Step 3: After the analysis, use the concat method to combine the control and test group data.
 
 #####################################################
-# GÖREV 3: Hipotez Testinin Gerçekleştirilmesi
+# Task 2: Defining the Hypothesis of A/B Testing
 #####################################################
 
-######################################################
-# AB Testing (Bağımsız İki Örneklem T Testi)
-######################################################
+# Step 1: Define the hypothesis.
 
+# Step 2: Analyze the purchase (earnings) averages for the control and test groups.
 
-# Adım 1: Hipotez testi yapılmadan önce varsayım kontrollerini yapınız.Bunlar Normallik Varsayımı ve Varyans Homojenliğidir.
+#####################################################
+# Task 3: Conducting the Hypothesis Test
+#####################################################
 
-# Kontrol ve test grubunun normallik varsayımına uyup uymadığını Purchase değişkeni üzerinden ayrı ayrı test ediniz
+#####################################################
+# A/B Testing (Independent Two Sample T-Test)
+#####################################################
 
+# Step 1: Before conducting the hypothesis test, perform assumption checks. These are the Normality Assumption and Homogeneity of Variances.
 
+# Test whether the control and test groups satisfy the normality assumption for the "Purchase" variable separately.
 
+# Step 2: Select the appropriate test based on the results of normality assumption and homogeneity of variances.
 
-# Adım 2: Normallik Varsayımı ve Varyans Homojenliği sonuçlarına göre uygun testi seçiniz
+# Step 3: Interpret whether there is a statistically significant difference between the control and test group purchase averages based on the p-value.
 
+#####################################################
+# Task 4: Analysis of Results
+#####################################################
 
-# Adım 3: Test sonucunda elde edilen p_value değerini göz önünde bulundurarak kontrol ve test grubu satın alma
-# ortalamaları arasında istatistiki olarak anlamlı bir fark olup olmadığını yorumlayınız.
+# Step 1: Explain which test you used and provide the reasons.
 
-
-
-##############################################################
-# GÖREV 4 : Sonuçların Analizi
-##############################################################
-
-# Adım 1: Hangi testi kullandınız, sebeplerini belirtiniz.
-
-
-
-
-# Adım 2: Elde ettiğiniz test sonuçlarına göre müşteriye tavsiyede bulununuz.
-
+# Step 2: Provide recommendations to the customer based on the test results.

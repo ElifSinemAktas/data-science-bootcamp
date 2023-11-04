@@ -1,36 +1,34 @@
-
 ###############################################################
-# RFM ile Müşteri Segmentasyonu (Customer Segmentation with RFM)
-###############################################################
-
-###############################################################
-# İş Problemi (Business Problem)
-###############################################################
-# FLO müşterilerini segmentlere ayırıp bu segmentlere göre pazarlama stratejileri belirlemek istiyor.
-# Buna yönelik olarak müşterilerin davranışları tanımlanacak ve bu davranış öbeklenmelerine göre gruplar oluşturulacak..
-
-###############################################################
-# Veri Seti Hikayesi
+# Customer Segmentation with RFM (RFM ile Müşteri Segmentasyonu)
 ###############################################################
 
-# Veri seti son alışverişlerini 2020 - 2021 yıllarında OmniChannel(hem online hem offline alışveriş yapan) olarak yapan müşterilerin geçmiş alışveriş davranışlarından
-# elde edilen bilgilerden oluşmaktadır.
-
-# master_id: Eşsiz müşteri numarası
-# order_channel : Alışveriş yapılan platforma ait hangi kanalın kullanıldığı (Android, ios, Desktop, Mobile, Offline)
-# last_order_channel : En son alışverişin yapıldığı kanal
-# first_order_date : Müşterinin yaptığı ilk alışveriş tarihi
-# last_order_date : Müşterinin yaptığı son alışveriş tarihi
-# last_order_date_online : Muşterinin online platformda yaptığı son alışveriş tarihi
-# last_order_date_offline : Muşterinin offline platformda yaptığı son alışveriş tarihi
-# order_num_total_ever_online : Müşterinin online platformda yaptığı toplam alışveriş sayısı
-# order_num_total_ever_offline : Müşterinin offline'da yaptığı toplam alışveriş sayısı
-# customer_value_total_ever_offline : Müşterinin offline alışverişlerinde ödediği toplam ücret
-# customer_value_total_ever_online : Müşterinin online alışverişlerinde ödediği toplam ücret
-# interested_in_categories_12 : Müşterinin son 12 ayda alışveriş yaptığı kategorilerin listesi
+###############################################################
+# Business Problem (İş Problemi)
+###############################################################
+# FLO wants to segment its customers and determine marketing strategies based on these segments.
+# To achieve this, customer behaviors will be defined, and groups will be created based on these behavioral clusters.
 
 ###############################################################
-# GÖREVLER
+# Data Set Story (Veri Seti Hikayesi)
+###############################################################
+
+# The data set consists of information obtained from the past shopping behaviors of customers who made their last purchases in 2020-2021 as OmniChannel (both online and offline shoppers).
+
+# master_id: Unique customer number
+# order_channel: Which channel belongs to the shopping platform (Android, ios, Desktop, Mobile, Offline)
+# last_order_channel: The channel where the last purchase was made
+# first_order_date: The date of the customer's first purchase
+# last_order_date: The date of the customer's last purchase
+# last_order_date_online: The date of the customer's last online platform purchase
+# last_order_date_offline: The date of the customer's last offline platform purchase
+# order_num_total_ever_online: The total number of purchases made by the customer on the online platform
+# order_num_total_ever_offline: The total number of purchases made by the customer offline
+# customer_value_total_ever_offline: The total amount paid by the customer for offline purchases
+# customer_value_total_ever_online: The total amount paid by the customer for online purchases
+# interested_in_categories_12: The list of categories the customer shopped in the last 12 months
+
+###############################################################
+# TASKS (GÖREVLER)
 ###############################################################
 
 import pandas as pd
@@ -39,145 +37,105 @@ pd.set_option('display.max_columns', None)
 # pd.set_option('display.max_rows', None)
 pd.set_option('display.float_format', lambda x: '%.3f' % x)
 
-# GÖREV 1: Veriyi Anlama (Data Understanding) ve Hazırlama
-           # 1. flo_data_20K.csv verisini okuyunuz.
+# TASK 1: Data Understanding and Preparation (Veriyi Anlama ve Hazırlama)
+# 1. Read the flo_data_20K.csv data.
 df = pd.read_csv("flo_data_20k.csv")
-           # 2. Veri setinde
-                     # a. İlk 10 gözlem,
+# 2. In the data set,
+# a. First 10 observations,
 df.head(10)
 df.head()
 df.shape
-                     # b. Değişken isimleri,
+# b. Variable names,
 df.columns
-                     # c. Betimsel istatistik,
+# c. Descriptive statistics,
 df.describe().T
-                     # d. Boş değer,
+# d. Missing values,
 df.isnull().values.any()
 df.isnull().sum()
-                     # e. Değişken tipleri, incelemesi yapınız.
+# e. Variable types, analyze them.
 df.info()
-           # 3. Omnichannel müşterilerin hem online'dan hemde offline platformlardan alışveriş yaptığını ifade etmektedir. Herbir müşterinin toplam
-           # alışveriş sayısı ve harcaması için yeni değişkenler oluşturun.
+# 3. Create new variables for the total number of purchases and expenditure for each customer as omnichannel customers shop both online and offline.
 df["total_expenditure"] = df["customer_value_total_ever_offline"] + df["customer_value_total_ever_online"] 
 df["total_num_of_purchase"] = df["order_num_total_ever_offline"] + df["order_num_total_ever_online"]
-           # 4. Değişken tiplerini inceleyiniz. Tarih ifade eden değişkenlerin tipini date'e çeviriniz.
-           # 5. Alışveriş kanallarındaki müşteri sayısının, ortalama alınan ürün sayısının ve ortalama harcamaların dağılımına bakınız.
-           # 6. En fazla kazancı getiren ilk 10 müşteriyi sıralayınız.
-           # 7. En fazla siparişi veren ilk 10 müşteriyi sıralayınız.
-           # 8. Veri ön hazırlık sürecini fonksiyonlaştırınız.
+# 4. Examine variable types. Convert date variables to date type.
+# 5. Examine the distribution of the number of customers, average number of products purchased, and average expenditures in shopping channels.
+# 6. List the top 10 customers with the highest revenue.
+# 7. List the top 10 customers with the most orders.
+# 8. Modularize the data preprocessing process.
 
-# GÖREV 2: RFM Metriklerinin Hesaplanması
+# TASK 2: Calculating RFM Metrics (RFM Metriklerinin Hesaplanması)
 
-# GÖREV 3: RF ve RFM Skorlarının Hesaplanması
+# TASK 3: Calculating RF and RFM Scores (RF ve RFM Skorlarının Hesaplanması)
 
-# GÖREV 4: RF Skorlarının Segment Olarak Tanımlanması
+# TASK 4: Defining RF Scores as Segments (RF Skorlarının Segment Olarak Tanımlanması)
 
-# GÖREV 5: Aksiyon zamanı!
-           # 1. Segmentlerin recency, frequnecy ve monetary ortalamalarını inceleyiniz.
-           # 2. RFM analizi yardımı ile 2 case için ilgili profildeki müşterileri bulun ve müşteri id'lerini csv ye kaydediniz.
-                   # a. FLO bünyesine yeni bir kadın ayakkabı markası dahil ediyor. Dahil ettiği markanın ürün fiyatları genel müşteri tercihlerinin üstünde. Bu nedenle markanın
-                   # tanıtımı ve ürün satışları için ilgilenecek profildeki müşterilerle özel olarak iletişime geçeilmek isteniliyor. Sadık müşterilerinden(champions,loyal_customers),
-                   # ortalama 250 TL üzeri ve kadın kategorisinden alışveriş yapan kişiler özel olarak iletişim kuralacak müşteriler. Bu müşterilerin id numaralarını csv dosyasına
-                   # yeni_marka_hedef_müşteri_id.cvs olarak kaydediniz.
-                   # b. Erkek ve Çoçuk ürünlerinde %40'a yakın indirim planlanmaktadır. Bu indirimle ilgili kategorilerle ilgilenen geçmişte iyi müşteri olan ama uzun süredir
-                   # alışveriş yapmayan kaybedilmemesi gereken müşteriler, uykuda olanlar ve yeni gelen müşteriler özel olarak hedef alınmak isteniliyor. Uygun profildeki müşterilerin id'lerini csv dosyasına indirim_hedef_müşteri_ids.csv
-                   # olarak kaydediniz.
+# TASK 5: Action Time! (Aksiyon zamanı!)
+# 1. Examine the averages of recency, frequency, and monetary values for segments.
+# 2. Find customers with relevant profiles for 2 cases using RFM analysis and save their customer IDs in a CSV file.
+# a. FLO is introducing a new women's shoe brand. It is planned to target loyal customers (champions, loyal_customers) who have an average expenditure of over 250 TL and shop in the women's category. Save the customer IDs to a CSV file named new_brand_target_customer_ids.csv.
+# b. A 40% discount is planned for men's and children's products. Special attention is desired for customers who are interested in these categories, who were good customers in the past but haven't shopped for a long time, and new customers. Save the IDs of suitable customers to a CSV file named discount_target_customer_ids.csv.
 
-
-# GÖREV 6: Tüm süreci fonksiyonlaştırınız.
+# TASK 6: Modularize the entire process.
 
 ###############################################################
-# GÖREV 1: Veriyi  Hazırlama ve Anlama (Data Understanding)
+# TASK 1: Data Understanding and Preparation (Veriyi Hazırlama ve Anlama)
 ###############################################################
 
+# 2. In the data set,
+# a. First 10 observations,
+# b. Variable names,
+# c. Size,
+# d. Descriptive statistics,
+# e. Missing values,
+# f. Analyze variable types.
 
-# 2. Veri setinde
-        # a. İlk 10 gözlem,
-        # b. Değişken isimleri,
-        # c. Boyut,
-        # d. Betimsel istatistik,
-        # e. Boş değer,
-        # f. Değişken tipleri, incelemesi yapınız.
+# 3. Omnichannel customers indicate that they shop from both online and offline platforms.
+# Create new variables for the total number of purchases and expenditure for each customer.
 
-
-
-# 3. Omnichannel müşterilerin hem online'dan hemde offline platformlardan alışveriş yaptığını ifade etmektedir.
-# Herbir müşterinin toplam alışveriş sayısı ve harcaması için yeni değişkenler oluşturunuz.
-
-
-
-# 4. Değişken tiplerini inceleyiniz. Tarih ifade eden değişkenlerin tipini date'e çeviriniz.
-
+# 4. Examine variable types. Convert date variables to date type.
 
 # df["last_order_date"] = df["last_order_date"].apply(pd.to_datetime)
 
+# 5. Examine the distribution of the number of customers, total number of products purchased, and total expenditures in shopping channels.
 
+# 6. List the top 10 customers with the highest revenue.
 
-# 5. Alışveriş kanallarındaki müşteri sayısının, toplam alınan ürün sayısı ve toplam harcamaların dağılımına bakınız. 
+# 7. List the top 10 customers with the most orders.
 
-
-
-# 6. En fazla kazancı getiren ilk 10 müşteriyi sıralayınız.
-
-
-
-
-# 7. En fazla siparişi veren ilk 10 müşteriyi sıralayınız.
-
-
-
-
-# 8. Veri ön hazırlık sürecini fonksiyonlaştırınız.
-
+# 8. Modularize the data preprocessing process.
 
 ###############################################################
-# GÖREV 2: RFM Metriklerinin Hesaplanması
+# TASK 2: Calculating RFM Metrics (RFM Metriklerinin Hesaplanması)
 ###############################################################
 
-# Veri setindeki en son alışverişin yapıldığı tarihten 2 gün sonrasını analiz tarihi
+# Analysis date is 2 days after the last shopping date in the data set.
 
-
-
-# customer_id, recency, frequnecy ve monetary değerlerinin yer aldığı yeni bir rfm dataframe
-
+# Create a new RFM dataframe that includes customer_id, recency, frequency, and monetary values.
 
 ###############################################################
-# GÖREV 3: RF ve RFM Skorlarının Hesaplanması (Calculating RF and RFM Scores)
+# TASK 3: Calculating RF and RFM Scores (RF ve RFM Skorlarının Hesaplanması)
 ###############################################################
 
-#  Recency, Frequency ve Monetary metriklerini qcut yardımı ile 1-5 arasında skorlara çevrilmesi ve
-# Bu skorları recency_score, frequency_score ve monetary_score olarak kaydedilmesi
+# Convert Recency, Frequency, and Monetary metrics into scores from 1 to 5 using qcut and save these scores as recency_score, frequency_score, and monetary_score.
 
-
-
-
-# recency_score ve frequency_score’u tek bir değişken olarak ifade edilmesi ve RF_SCORE olarak kaydedilmesi
-
+# Express recency_score and frequency_score as a single variable and save it as RF_SCORE.
 
 ###############################################################
-# GÖREV 4: RF Skorlarının Segment Olarak Tanımlanması
+# TASK 4: Defining RF Scores as Segments (RF Skorlarının Segment Olarak Tanımlanması)
 ###############################################################
 
-# Oluşturulan RFM skorların daha açıklanabilir olması için segment tanımlama ve  tanımlanan seg_map yardımı ile RF_SCORE'u segmentlere çevirme
-
+# For more understandable RFM scores, define segments and convert RF_SCORE to segments using the defined seg_map.
 
 ###############################################################
-# GÖREV 5: Aksiyon zamanı!
+# TASK 5: Action Time! (Aksiyon zamanı!)
 ###############################################################
 
-# 1. Segmentlerin recency, frequnecy ve monetary ortalamalarını inceleyiniz.
+# 1. Examine the averages of recency, frequency, and monetary values for segments.
 
+# 2. Find customers with relevant profiles for 2 cases using RFM analysis and save their customer IDs in CSV files.
 
+# a. FLO is introducing a new women's shoe brand. It is planned to target loyal customers who shop in the women's category and have an average expenditure of over 250 TL. Save the customer IDs to a CSV file named new_brand_target_customer_ids.csv.
 
-# 2. RFM analizi yardımı ile 2 case için ilgili profildeki müşterileri bulunuz ve müşteri id'lerini csv ye kaydediniz.
+# b. A 40% discount is planned for men's and children's products. Special attention is desired for customers who are interested in these categories, who were good customers in the past but haven't shopped for a long time, and new customers. Save the IDs of suitable customers to a CSV file named discount_target_customer_ids.csv.
 
-# a. FLO bünyesine yeni bir kadın ayakkabı markası dahil ediyor. Dahil ettiği markanın ürün fiyatları genel müşteri tercihlerinin üstünde. Bu nedenle markanın
-# tanıtımı ve ürün satışları için ilgilenecek profildeki müşterilerle özel olarak iletişime geçeilmek isteniliyor. Bu müşterilerin sadık  ve
-# kadın kategorisinden alışveriş yapan kişiler olması planlandı. Müşterilerin id numaralarını csv dosyasına yeni_marka_hedef_müşteri_id.cvs
-# olarak kaydediniz.
-
-
-
-# b. Erkek ve Çoçuk ürünlerinde %40'a yakın indirim planlanmaktadır. Bu indirimle ilgili kategorilerle ilgilenen geçmişte iyi müşterilerden olan ama uzun süredir
-# alışveriş yapmayan ve yeni gelen müşteriler özel olarak hedef alınmak isteniliyor. Uygun profildeki müşterilerin id'lerini csv dosyasına indirim_hedef_müşteri_ids.csv
-# olarak kaydediniz.
+# TASK 6: Modularize the entire process.
